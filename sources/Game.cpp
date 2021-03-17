@@ -18,14 +18,15 @@ void Game::Welcome()
 
 int Game::GameLoop()
 {
+    SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
 
     sScore = {"score: ", 0};
     lstSnake = {
-        {'@', {0, 0}},
-        {'#', {1, 0}},
-        {'#', {2, 0}},
-        {'#', {3, 0}},
-        {'#', {4, 0}},
+        sSnakeHead,
+        {'#', {sSnakeHead.ptSegmentPosition.x + 1, sSnakeHead.ptSegmentPosition.y + 0}},
+        {'#', {sSnakeHead.ptSegmentPosition.x + 2, sSnakeHead.ptSegmentPosition.y + 0}},
+        {'#', {sSnakeHead.ptSegmentPosition.x + 3, sSnakeHead.ptSegmentPosition.y + 0}},
+        {'#', {sSnakeHead.ptSegmentPosition.x + 4, sSnakeHead.ptSegmentPosition.y + 0}},
     };
 
     srand((unsigned)time(NULL));
@@ -46,7 +47,7 @@ int Game::GameLoop()
         system("cls");
         DrawStat();
         DrawFood();
-        // DrawSnake();
+        DrawSnake();
 
         if (_getch() == KEY_ESCAPE)
             break;
