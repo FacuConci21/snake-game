@@ -18,35 +18,59 @@ void Game::Welcome()
 
 int Game::GameLoop()
 {
-    SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
+    int nSnakeDirection = 3;
 
+    ptSnakeHead = {N_SCREENCENTER_X, N_SCREENCENTER_Y};
+    SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
+    nSnakeLength = 3;
     sScore = {"score: ", 0};
-    lstSnake = {
-        sSnakeHead,
-        {'#', {sSnakeHead.ptSegmentPosition.x + 1, sSnakeHead.ptSegmentPosition.y + 0}},
-        {'#', {sSnakeHead.ptSegmentPosition.x + 2, sSnakeHead.ptSegmentPosition.y + 0}},
-        {'#', {sSnakeHead.ptSegmentPosition.x + 3, sSnakeHead.ptSegmentPosition.y + 0}},
-        {'#', {sSnakeHead.ptSegmentPosition.x + 4, sSnakeHead.ptSegmentPosition.y + 0}},
-    };
+
+    for (int i = 1; i <= nSnakeLength; i++)
+    {
+        lsSnake.push_back({ptSnakeHead.x + i, ptSnakeHead.y});
+    }
 
     srand((unsigned)time(NULL));
 
     system("cls");
 
     Welcome();
-
+    sFood.x = (rand() % N_SCREENWIDTH);
+    sFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
     while (bInGame)
     {
-        sFood.x = (rand() % N_SCREENWIDTH);
-        sFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
+
+        lsSnake.push_front({ptSnakeHead.x, ptSnakeHead.y});
+
         // Timing & input
 
         // Game Logic
+        switch (nSnakeDirection)
+        {
+        case 0: // UP
+            UpdateHeadCoords(0, (-1));
+            break;
+        case 1: // RIGHT
+            UpdateHeadCoords(1, 0);
+            break;
+        case 2: // DOWN
+            UpdateHeadCoords(0, (1));
+            break;
+        case 3: // LEFT
+            UpdateHeadCoords((-1), 0);
+            break;
+        }
 
-        // Display
+        /*      DISPLAY     */
         system("cls");
         DrawStat();
         DrawFood();
+
+        // { // Draw Snake Head.
+        //     __utils::GoToXY(lsSnake.front().x, lsSnake.front().y);
+        //     (bDead) ? _putch('X') : _putch('x');
+        // }
+
         DrawSnake();
 
         if (_getch() == KEY_ESCAPE)
