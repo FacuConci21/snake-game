@@ -13,8 +13,8 @@ using namespace std;
 #ifndef GAME_H
 #define GAME_H
 
-#define N_SCREENWIDTH 100
-#define N_SCREENHEIGHT 80
+#define N_SCREENWIDTH 63
+#define N_SCREENHEIGHT 43
 
 #define N_SCREENCENTER_X 15
 #define N_SCREENCENTER_Y 15
@@ -31,14 +31,13 @@ class Game
     bool bInGame;
     list<SSnakeSegment> lstSnake;
     __utils::SStat sScore;
+    __utils::SPoint sFood;
 
     inline void DrawSnake()
     {
         for (SSnakeSegment snk : lstSnake)
         {
-            __utils::GoToXY(
-                N_SCREENCENTER_X + snk.ptSegmentPosition.x,
-                N_SCREENCENTER_Y + snk.ptSegmentPosition.y);
+            __utils::GoToXY(snk.ptSegmentPosition.x, snk.ptSegmentPosition.y);
             (bDead) ? _putch('x') : _putch(snk.bSegmentCharacter);
         }
     }
@@ -46,8 +45,14 @@ class Game
     inline void DrawStat()
     {
         __utils::GoToXY(0, 0);
-        cout << sScore.nValue << endl;
-        cout << "---------------------";
+        cout << " == " << sScore.sPrintingText << sScore.nValue << " == " << endl;
+        // cout << "==============================================";
+    }
+
+    inline void DrawFood()
+    {
+        __utils::GoToXY(sFood.x, sFood.y);
+        _putch('a');
     }
 
 public:

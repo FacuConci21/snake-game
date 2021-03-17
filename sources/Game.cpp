@@ -18,6 +18,7 @@ void Game::Welcome()
 
 int Game::GameLoop()
 {
+
     sScore = {"score: ", 0};
     lstSnake = {
         {'@', {0, 0}},
@@ -27,7 +28,7 @@ int Game::GameLoop()
         {'#', {4, 0}},
     };
 
-    srand(time(0));
+    srand((unsigned)time(NULL));
 
     system("cls");
 
@@ -35,7 +36,8 @@ int Game::GameLoop()
 
     while (bInGame)
     {
-
+        sFood.x = (rand() % N_SCREENWIDTH);
+        sFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
         // Timing & input
 
         // Game Logic
@@ -43,9 +45,11 @@ int Game::GameLoop()
         // Display
         system("cls");
         DrawStat();
-        DrawSnake();
+        DrawFood();
+        // DrawSnake();
 
-        _getch();
+        if (_getch() == KEY_ESCAPE)
+            break;
     }
 
     return 0;
