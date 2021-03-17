@@ -32,10 +32,6 @@ class Game
     list<SSnakeSegment> lstSnake;
     __utils::SStat sScore;
 
-public:
-    Game() : bInGame(true){};
-    ~Game(){};
-
     inline void DrawSnake()
     {
         for (SSnakeSegment snk : lstSnake)
@@ -53,6 +49,10 @@ public:
         cout << sScore.nValue << endl;
         cout << "---------------------";
     }
+
+public:
+    Game() : bInGame(true){};
+    ~Game(){};
 
     void Welcome();
     int GameLoop();

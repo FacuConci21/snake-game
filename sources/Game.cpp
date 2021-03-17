@@ -35,14 +35,13 @@ int Game::GameLoop()
 
     while (bInGame)
     {
-        system("cls");
 
         // Timing & input
 
         // Game Logic
 
         // Display
-
+        system("cls");
         DrawStat();
         DrawSnake();
 
