@@ -14,7 +14,7 @@ using namespace std;
 #define GAME_H
 
 #define N_SCREENWIDTH 63
-#define N_SCREENHEIGHT 43
+#define N_SCREENHEIGHT 23
 
 #define N_SCREENCENTER_X 15
 #define N_SCREENCENTER_Y 15
@@ -35,7 +35,36 @@ class Game
     list<__utils::SPoint> lsSnake;
     list<SSnakeSegment> lstSnake;
     __utils::SStat sScore;
-    __utils::SPoint sFood;
+    __utils::SPoint ptFood;
+
+    inline void SnakeCollision()
+    {
+        for (auto snk : lsSnake)
+        {
+            if ((snk.x == lsSnake.front().x && snk.y == lsSnake.front().y) &&
+                (ptSnakeHead.x != lsSnake.front().x && ptSnakeHead.y == lsSnake.front().y))
+            {
+                bDead = true;
+            }
+        }
+    }
+
+    inline void FoodCollision()
+    {
+        if (ptSnakeHead.x == ptFood.x && ptSnakeHead.y == ptFood.y)
+        {
+            int foodX = rand() % N_SCREENWIDTH, foodY = (rand() % (N_SCREENHEIGHT - 3)) + 3;
+
+            sScore.nValue += nSnakeLength;
+
+            lsSnake.push_back({lsSnake.back().x, lsSnake.back().y});
+
+            nSnakeLength = lsSnake.size();
+
+            ptFood.x = foodX;
+            ptFood.y = foodY;
+        }
+    }
 
     inline void DrawSnake()
     {
@@ -56,7 +85,7 @@ class Game
 
     inline void DrawFood()
     {
-        __utils::GoToXY(sFood.x, sFood.y);
+        __utils::GoToXY(ptFood.x, ptFood.y);
         _putch('a');
     }
 

@@ -18,25 +18,25 @@ void Game::Welcome()
 
 int Game::GameLoop()
 {
-    int nSnakeDirection = 3;
+    srand((unsigned)time(NULL));
 
+    int nSnakeDirection = 3;
     ptSnakeHead = {N_SCREENCENTER_X, N_SCREENCENTER_Y};
     SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
     nSnakeLength = 3;
     sScore = {"score: ", 0};
+    ptFood.x = (rand() % N_SCREENWIDTH);
+    ptFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
 
     for (int i = 1; i <= nSnakeLength; i++)
     {
         lsSnake.push_back({ptSnakeHead.x + i, ptSnakeHead.y});
     }
 
-    srand((unsigned)time(NULL));
-
     system("cls");
 
     Welcome();
-    sFood.x = (rand() % N_SCREENWIDTH);
-    sFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
+
     while (bInGame)
     {
 
@@ -81,7 +81,11 @@ int Game::GameLoop()
             }
         }
 
-        // Game Logic
+        /* Game Logic   */
+
+        // Collision
+        FoodCollision();
+
         switch (nSnakeDirection)
         {
         case 0: // UP
@@ -98,6 +102,8 @@ int Game::GameLoop()
             break;
         }
 
+        // SnakeCollition();
+
         /*      DISPLAY     */
         system("cls");
 
@@ -105,16 +111,9 @@ int Game::GameLoop()
 
         DrawFood();
 
-        // { // Draw Snake Head.
-        //     __utils::GoToXY(lsSnake.front().x, lsSnake.front().y);
-        //     (bDead) ? _putch('X') : _putch('x');
-        // }
-
         DrawSnake();
 
         Sleep(100);
-        // if (_getch() == KEY_ESCAPE)
-        //     break;
     }
 
     return 0;
