@@ -29,17 +29,22 @@ class Game
 {
     bool bDead = false;
     bool bInGame;
+    int nSnakeLength;
+
+    __utils::SPoint ptSnakeHead;
+    list<__utils::SPoint> lsSnake;
     list<SSnakeSegment> lstSnake;
     __utils::SStat sScore;
     __utils::SPoint sFood;
 
     inline void DrawSnake()
     {
-        for (SSnakeSegment snk : lstSnake)
+        for (auto snk : lsSnake)
         {
-            __utils::GoToXY(snk.ptSegmentPosition.x, snk.ptSegmentPosition.y);
-            (bDead) ? _putch('x') : _putch(snk.bSegmentCharacter);
+            __utils::GoToXY(snk.x, snk.y);
+            (bDead) ? _putch('x') : _putch('o');
         }
+        lsSnake.pop_back();
     }
 
     inline void DrawStat()
@@ -53,6 +58,29 @@ class Game
     {
         __utils::GoToXY(sFood.x, sFood.y);
         _putch('a');
+    }
+
+    inline void UpdateHeadCoords(int _x, int _y)
+    {
+        ptSnakeHead.x += _x;
+        ptSnakeHead.y += _y;
+
+        if (ptSnakeHead.x <= 0)
+        {
+            ptSnakeHead.x = 0;
+        }
+        else if (ptSnakeHead.x >= N_SCREENWIDTH)
+        {
+            ptSnakeHead.x = N_SCREENWIDTH;
+        }
+        else if (ptSnakeHead.y <= 0)
+        {
+            ptSnakeHead.y = 0;
+        }
+        else if (ptSnakeHead.y >= N_SCREENWIDTH)
+        {
+            ptSnakeHead.y = N_SCREENWIDTH;
+        }
     }
 
 public:
