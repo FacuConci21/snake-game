@@ -119,7 +119,7 @@ int Game::GameLoop()
 
         DrawSnake();
 
-        Sleep((nSnakeDirection % 2 == 0) ? 170 : 100);
+        Sleep((nSnakeDirection % 2 == 0) ? 140 : 60);
     }
 
     return 0;
