@@ -41,10 +41,10 @@ class Game
     {
         for (auto snk : lsSnake)
         {
-            if ((snk.x == lsSnake.front().x && snk.y == lsSnake.front().y) &&
-                (ptSnakeHead.x != lsSnake.front().x && ptSnakeHead.y == lsSnake.front().y))
+            if (ptSnakeHead.x == snk.x && ptSnakeHead.y == snk.y)
             {
                 bDead = true;
+                break;
             }
         }
     }
@@ -113,7 +113,7 @@ class Game
     }
 
 public:
-    Game() : bInGame(true){};
+    Game(){};
     ~Game(){};
 
     void Welcome();

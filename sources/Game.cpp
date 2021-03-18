@@ -23,7 +23,7 @@ int Game::GameLoop()
     int nSnakeDirection = 3;
     ptSnakeHead = {N_SCREENCENTER_X, N_SCREENCENTER_Y};
     SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
-    nSnakeLength = 3;
+    nSnakeLength = 10;
     sScore = {"score: ", 0};
     ptFood.x = (rand() % N_SCREENWIDTH);
     ptFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
@@ -37,6 +37,7 @@ int Game::GameLoop()
 
     Welcome();
 
+    /*      GAME LOOP       */
     while (bInGame)
     {
 
@@ -75,7 +76,7 @@ int Game::GameLoop()
             {
                 bInGame = false;
             }
-            break;
+                return 0;
             default:
                 break;
             }
@@ -84,7 +85,6 @@ int Game::GameLoop()
         /* Game Logic   */
 
         // Collision
-
         FoodCollision();
 
         switch (nSnakeDirection)
@@ -103,6 +103,13 @@ int Game::GameLoop()
             break;
         }
 
+        SnakeCollision();
+
+        if (bDead)
+        {
+            bInGame = false;
+        }
+
         /*      DISPLAY     */
         system("cls");
 
@@ -112,7 +119,7 @@ int Game::GameLoop()
 
         DrawSnake();
 
-        // Sleep(100);
+        Sleep((nSnakeDirection % 2 == 0) ? 170 : 100);
     }
 
     return 0;
