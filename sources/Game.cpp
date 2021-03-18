@@ -43,6 +43,43 @@ int Game::GameLoop()
         lsSnake.push_front({ptSnakeHead.x, ptSnakeHead.y});
 
         // Timing & input
+        if (_kbhit())
+        {
+            switch (_getch())
+            {
+            case KEY_W:
+            {
+                if (nSnakeDirection == 1 || nSnakeDirection == 3)
+                    nSnakeDirection = 0;
+            }
+            break;
+            case KEY_S:
+            {
+                if (nSnakeDirection == 1 || nSnakeDirection == 3)
+                    nSnakeDirection = 2;
+            }
+            break;
+            case KEY_A:
+            {
+                if (nSnakeDirection == 0 || nSnakeDirection == 2)
+                    nSnakeDirection = 3;
+            }
+            break;
+            case KEY_D:
+            {
+                if (nSnakeDirection == 0 || nSnakeDirection == 2)
+                    nSnakeDirection = 1;
+            }
+            break;
+            case KEY_ESCAPE:
+            {
+                bInGame = false;
+            }
+            break;
+            default:
+                break;
+            }
+        }
 
         // Game Logic
         switch (nSnakeDirection)
@@ -63,7 +100,9 @@ int Game::GameLoop()
 
         /*      DISPLAY     */
         system("cls");
+
         DrawStat();
+
         DrawFood();
 
         // { // Draw Snake Head.
@@ -73,8 +112,9 @@ int Game::GameLoop()
 
         DrawSnake();
 
-        if (_getch() == KEY_ESCAPE)
-            break;
+        Sleep(100);
+        // if (_getch() == KEY_ESCAPE)
+        //     break;
     }
 
     return 0;
