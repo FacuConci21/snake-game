@@ -96,19 +96,19 @@ class Game
 
         if (ptSnakeHead.x <= 0)
         {
-            ptSnakeHead.x = 0;
+            ptSnakeHead.x = N_SCREENWIDTH;
         }
         else if (ptSnakeHead.x >= N_SCREENWIDTH)
         {
-            ptSnakeHead.x = N_SCREENWIDTH;
+            ptSnakeHead.x = 0;
         }
-        else if (ptSnakeHead.y <= 0)
+        else if (ptSnakeHead.y < 1)
         {
-            ptSnakeHead.y = 0;
+            ptSnakeHead.y = N_SCREENHEIGHT;
         }
-        else if (ptSnakeHead.y >= N_SCREENWIDTH)
+        else if (ptSnakeHead.y > N_SCREENHEIGHT)
         {
-            ptSnakeHead.y = N_SCREENWIDTH;
+            ptSnakeHead.y = 1;
         }
     }
 

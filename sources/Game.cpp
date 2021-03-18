@@ -84,6 +84,7 @@ int Game::GameLoop()
         /* Game Logic   */
 
         // Collision
+
         FoodCollision();
 
         switch (nSnakeDirection)
@@ -102,8 +103,6 @@ int Game::GameLoop()
             break;
         }
 
-        // SnakeCollition();
-
         /*      DISPLAY     */
         system("cls");
 
@@ -113,7 +112,7 @@ int Game::GameLoop()
 
         DrawSnake();
 
-        Sleep(100);
+        // Sleep(100);
     }
 
     return 0;
