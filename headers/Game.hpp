@@ -116,7 +116,7 @@ public:
     Game(){};
     ~Game(){};
 
-    void Welcome();
+    static void Welcome(int, int);
     int GameLoop();
 };
 

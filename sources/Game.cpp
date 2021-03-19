@@ -1,19 +1,19 @@
 #include "Game.hpp"
 
-void Game::Welcome()
+void Game::Welcome(int _x, int _y)
 {
-    __utils::GoToXY(10, 10);
+    __utils::GoToXY(_x, _y);
     cout << "========================================" << endl;
-    __utils::GoToXY(15, 11);
+    __utils::GoToXY(_x + 10, _y + 1);
     cout << "WELCOME TO THE SNAKE GAME:" << endl;
-    __utils::GoToXY(20, 12);
+    __utils::GoToXY(_x + 10, _y + 2);
     cout << "by Facundo Conci" << endl;
-    __utils::GoToXY(10, 13);
+    __utils::GoToXY(_x, _y + 3);
     cout << "========================================" << endl;
 
-    __utils::GoToXY(0, 20);
-    cout << "press any key" << endl;
-    _getch();
+    // __utils::GoToXY(0, N_SCREENHEIGHT);
+    // cout << "press any key" << endl;
+    // _getch();
 }
 
 int Game::GameLoop()
@@ -33,9 +33,9 @@ int Game::GameLoop()
         lsSnake.push_back({ptSnakeHead.x + i, ptSnakeHead.y});
     }
 
-    system("cls");
+    // system("cls");
 
-    Welcome();
+    // Welcome();
 
     /*      GAME LOOP       */
     while (bInGame)
