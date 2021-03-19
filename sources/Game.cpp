@@ -1,18 +1,29 @@
 #include "Game.hpp"
 
-void Game::Welcome()
+void Game::Welcome(int _x, int _y)
 {
-    __utils::GoToXY(10, 10);
+    __utils::GoToXY(_x, _y);
     cout << "========================================" << endl;
-    __utils::GoToXY(15, 11);
+    __utils::GoToXY(_x + 5, _y + 1);
     cout << "WELCOME TO THE SNAKE GAME:" << endl;
-    __utils::GoToXY(20, 12);
+    __utils::GoToXY(_x + 10, _y + 2);
     cout << "by Facundo Conci" << endl;
-    __utils::GoToXY(10, 13);
+    __utils::GoToXY(_x, _y + 3);
     cout << "========================================" << endl;
 
-    __utils::GoToXY(0, 20);
+    __utils::GoToXY(_x + 10, N_SCREENHEIGHT);
     cout << "press any key" << endl;
+    _getch();
+}
+
+void Game::GameOver(int _x, int _y)
+{
+    __utils::GoToXY(_x, _y);
+    cout << "==============================" << endl;
+    __utils::GoToXY(_x + 10, _y + 1);
+    cout << "Game Over" << endl;
+    __utils::GoToXY(_x, _y + 2);
+    cout << "==============================" << endl;
     _getch();
 }
 
@@ -22,8 +33,8 @@ int Game::GameLoop()
 
     int nSnakeDirection = 3;
     ptSnakeHead = {N_SCREENCENTER_X, N_SCREENCENTER_Y};
-    SSnakeSegment sSnakeHead = {'@', N_SCREENCENTER_X, N_SCREENCENTER_Y};
-    nSnakeLength = 10;
+    nSnakeLength = 4;
+    bDead = false;
     sScore = {"score: ", 0};
     ptFood.x = (rand() % N_SCREENWIDTH);
     ptFood.y = (rand() % (N_SCREENHEIGHT - 3)) + 3;
@@ -35,7 +46,7 @@ int Game::GameLoop()
 
     system("cls");
 
-    Welcome();
+    Welcome(N_SCREENWIDTH / 3, N_SCREENHEIGHT / 3);
 
     /*      GAME LOOP       */
     while (bInGame)
@@ -43,7 +54,7 @@ int Game::GameLoop()
 
         lsSnake.push_front({ptSnakeHead.x, ptSnakeHead.y});
 
-        // Timing & input
+        /*      Timing & input      */
         if (_kbhit())
         {
             switch (_getch())
@@ -82,9 +93,8 @@ int Game::GameLoop()
             }
         }
 
-        /* Game Logic   */
+        /*      Game Logic   */
 
-        // Collision
         FoodCollision();
 
         switch (nSnakeDirection)
@@ -119,8 +129,11 @@ int Game::GameLoop()
 
         DrawSnake();
 
+        /*      SLEEPING GAME   */
         Sleep((nSnakeDirection % 2 == 0) ? 140 : 60);
     }
+
+    GameOver(N_SCREENWIDTH / 3, N_SCREENHEIGHT / 3);
 
     return 0;
 }

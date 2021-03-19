@@ -13,7 +13,7 @@ using namespace std;
 #ifndef GAME_H
 #define GAME_H
 
-#define N_SCREENWIDTH 63
+#define N_SCREENWIDTH 60
 #define N_SCREENHEIGHT 23
 
 #define N_SCREENCENTER_X 15
@@ -27,13 +27,11 @@ struct SSnakeSegment
 
 class Game
 {
-    bool bDead = false;
+    bool bDead;
     bool bInGame;
     int nSnakeLength;
-
     __utils::SPoint ptSnakeHead;
     list<__utils::SPoint> lsSnake;
-    list<SSnakeSegment> lstSnake;
     __utils::SStat sScore;
     __utils::SPoint ptFood;
 
@@ -80,7 +78,6 @@ class Game
     {
         __utils::GoToXY(0, 0);
         cout << " == " << sScore.sPrintingText << sScore.nValue << " == " << endl;
-        // cout << "==============================================";
     }
 
     inline void DrawFood()
@@ -116,7 +113,10 @@ public:
     Game(){};
     ~Game(){};
 
-    void Welcome();
+    void Welcome(int, int);
+
+    void GameOver(int, int);
+
     int GameLoop();
 };
 
